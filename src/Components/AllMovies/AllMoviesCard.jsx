@@ -1,8 +1,9 @@
 import React from "react";
 import { Star } from "lucide-react";
+import { Link } from "react-router";
 
 const AllMoviesCard = ({ movies }) => {
-  const { title, rating, releaseYear, posterUrl, genre } = movies;
+  const { _id, title, rating, releaseYear, posterUrl, genre } = movies;
 
   return (
     <div className=" backdrop-blur-md bg-gray-300 rounded-xl p-8 shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
@@ -24,7 +25,9 @@ const AllMoviesCard = ({ movies }) => {
         <p className="text-sm ">{genre}</p>
         <p className="text-sm font-semibold mt-1">Release: {releaseYear}</p>
       </div>
-      <button className="btn w-full ">View Details</button>
+      <Link to={`/movies/${_id}`} className="btn w-full ">
+        View Details
+      </Link>
     </div>
   );
 };

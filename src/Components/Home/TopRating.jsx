@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import TopMovies from "./TopMovies";
+import { Link } from "react-router";
 
 const TopRating = ({ topRateMoviesPromise }) => {
   const movies = use(topRateMoviesPromise);
@@ -12,7 +13,9 @@ const TopRating = ({ topRateMoviesPromise }) => {
         ))}
       </div>
       <div className="flex justify-center items-center">
-        <button className="btn flex justify-center mt-12">Show All</button>
+        <Link to="/movies" className="btn flex justify-center mt-12">
+          Show All
+        </Link>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import AuthProvider from "./Context/AuthProvider";
 import Login from "./Components/Login/Login.jsx";
 import Register from "./Components/Register/Register.jsx";
 import AllMovies from "./Components/AllMovies/AllMovies.jsx";
+import MoviesDetails from "./Components/MoviesDetails/MoviesDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
         path: "/movies",
         element: <AllMovies />,
       },
+      {
+        path:"/movies/:id",
+        element:<MoviesDetails/>,
+        loader:({params})=>fetch(`https://assignment-ten-server-wine.vercel.app/movies/${params.id}`)
+      }
     ],
   },
 ]);
