@@ -14,7 +14,7 @@ const Footer = () => {
         
         <div className="flex flex-col gap-4 w-full md:w-1/4 text-center md:text-left">
           <h2 className="text-2xl font-bold text-primary">MovieMaster Pro</h2>
-          <p className="text-gray-500 text-sm">
+          <p className=" text-sm">
             &copy; {new Date().getFullYear()} MovieMaster Pro. All rights
             reserved.
           </p>
@@ -23,32 +23,32 @@ const Footer = () => {
         
         <div className="flex flex-col sm:flex-row gap-6 w-full md:w-1/2 justify-center">
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold text-gray-700">Movies</h3>
-            <Link to="/movies" className="link link-hover text-gray-600">
+            <h3 className="font-semibold ">Movies</h3>
+            <Link to="/movies" className="link link-hover ">
               All Movies
             </Link>
             <Link
               to="/movies/top-rated"
-              className="link link-hover text-gray-600"
+              className="link link-hover "
             >
               Top Rated
             </Link>
-            <Link to="/movies/recent" className="link link-hover text-gray-600">
+            <Link to="/movies/recent" className="link link-hover ">
               Recently Added
             </Link>
           </div>
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold text-gray-700">Genres</h3>
-            <Link to="/genres/action" className="link link-hover text-gray-600">
+            <h3 className="font-semibold ">Genres</h3>
+            <Link to="/genres/action" className="link link-hover ">
               Action
             </Link>
-            <Link to="/genres/comedy" className="link link-hover text-gray-600">
+            <Link to="/genres/comedy" className="link link-hover ">
               Comedy
             </Link>
-            <Link to="/genres/drama" className="link link-hover text-gray-600">
+            <Link to="/genres/drama" className="link link-hover ">
               Drama
             </Link>
-            <Link to="/genres/horror" className="link link-hover text-gray-600">
+            <Link to="/genres/horror" className="link link-hover ">
               Horror
             </Link>
           </div>
@@ -56,8 +56,8 @@ const Footer = () => {
 
         
         <div className="flex flex-col gap-4 w-full md:w-1/4 text-center md:text-right">
-          <h3 className="font-semibold text-gray-700">Follow Us</h3>
-          <div className="flex justify-center md:justify-end gap-3 text-gray-600">
+          <h3 className="font-semibold ">Follow Us</h3>
+          <div className="flex justify-center md:justify-end gap-3 ">
             <a href="#" className="hover:text-primary transition">
               <FaFacebookF />
             </a>
@@ -74,7 +74,7 @@ const Footer = () => {
 
           
           <div className="mt-4">
-            <p className="text-gray-600 text-sm mb-2">
+            <p className=" text-sm mb-2">
               Subscribe to our newsletter
             </p>
             <div className="flex gap-2">
