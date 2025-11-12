@@ -1,24 +1,25 @@
-import React from "react";
-import { Link, NavLink } from "react-router";
+import React, { useState, useContext } from "react";
+import { Link, NavLink } from "react-router"; 
+import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
-
-
-    const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    logOut().catch(err => console.error(err));
+    logOut()
+      .then(() => console.log("User logged out"))
+      .catch((err) => console.log(err));
   };
-
-
 
   const navLinks = (
     <>
       <li>
         <NavLink
           to="/"
-          className={({ isActive }) => (isActive ? "text-primary" : "")}
+          className={({ isActive }) =>
+            isActive ? "text-primary font-semibold" : ""
+          }
         >
           Home
         </NavLink>
@@ -26,7 +27,9 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies"
-          className={({ isActive }) => (isActive ? "text-primary" : "")}
+          className={({ isActive }) =>
+            isActive ? "text-primary font-semibold" : ""
+          }
         >
           All Movies
         </NavLink>
@@ -35,7 +38,9 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/movies/my-collection"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
+            className={({ isActive }) =>
+              isActive ? "text-primary font-semibold" : ""
+            }
           >
             My Collection
           </NavLink>
@@ -95,7 +100,7 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Mobile Menu Button */}
+        
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -119,16 +124,16 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <ul className="flex flex-col md:hidden gap-4 mt-2 p-4 bg-base-200 rounded-lg shadow">
+        <ul className="flex flex-col md:hidden items-center gap-3 mt-2 w-3/12 p-4 bg-base-200 rounded-lg shadow absolute right-0 ">
           {navLinks}
           {user ? (
             <>
               <li>
                 <button
                   onClick={handleLogout}
-                  className="btn btn-outline btn-primary w-full"
+                  className="btn btn-outline btn-primary btn-sm"
                 >
                   Logout
                 </button>
@@ -149,13 +154,13 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/login"
-                  className="btn btn-outline btn-primary w-full"
+                  className="btn btn-outline btn-primary btn-sm"
                 >
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/register" className="btn btn-primary w-full">
+                <Link to="/register" className="btn btn-primary btn-sm">
                   Register
                 </Link>
               </li>
