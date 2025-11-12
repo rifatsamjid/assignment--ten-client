@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router"; 
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
@@ -100,7 +100,6 @@ const Navbar = () => {
           )}
         </ul>
 
-        
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -126,7 +125,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <ul className="flex flex-col md:hidden items-center gap-3 mt-2 w-3/12 p-4 bg-base-200 rounded-lg shadow absolute right-0 ">
+        <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-3/12 p-4 bg-base-200 rounded-lg shadow absolute right-0 ">
           {navLinks}
           {user ? (
             <>

@@ -8,6 +8,7 @@ import Home from "./Components/Home/Home.jsx";
 import AuthProvider from "./Context/AuthProvider";
 import Login from "./Components/Login/Login.jsx";
 import Register from "./Components/Register/Register.jsx";
+import AllMovies from "./Components/AllMovies/AllMovies.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/movies",
+        element: <AllMovies />,
       },
     ],
   },

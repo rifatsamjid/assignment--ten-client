@@ -49,7 +49,7 @@ const HeroInfinite = () => {
       setCurrentIndex((prevIndex) =>
         prevIndex === recentMovies.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // 
+    }, 3000); //
 
     return () => clearInterval(interval);
   }, []);
@@ -57,7 +57,7 @@ const HeroInfinite = () => {
   const currentMovie = recentMovies[currentIndex];
 
   return (
-    <div className="relative w-full flex justify-center items-center py-20 px-4">
+    <div className="relative -z-10 w-full flex justify-center items-center py-20 px-4">
       <AnimatePresence>
         <motion.div
           key={currentMovie.title}

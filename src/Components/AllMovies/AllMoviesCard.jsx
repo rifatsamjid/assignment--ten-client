@@ -1,8 +1,8 @@
 import React from "react";
 import { Star } from "lucide-react";
 
-const TopMovies = ({ top }) => {
-  const { title, rating, releaseYear, posterUrl, genre } = top;
+const AllMoviesCard = ({ movies }) => {
+  const { title, rating, releaseYear, posterUrl, genre } = movies;
 
   return (
     <div className=" backdrop-blur-md bg-gray-300 rounded-xl p-8 shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
@@ -29,4 +29,4 @@ const TopMovies = ({ top }) => {
   );
 };
 
-export default TopMovies;
+export default AllMoviesCard;
