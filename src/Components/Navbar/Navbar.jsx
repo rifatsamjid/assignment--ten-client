@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink } from "react-router"; // make sure it's react-router-dom
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
@@ -17,6 +17,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/"
+          end
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : ""
           }
@@ -27,6 +28,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies"
+          end
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : ""
           }
@@ -35,16 +37,28 @@ const Navbar = () => {
         </NavLink>
       </li>
       {user && (
-        <li>
-          <NavLink
-            to="/movies/my-collection"
-            className={({ isActive }) =>
-              isActive ? "text-primary font-semibold" : ""
-            }
-          >
-            My Collection
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink
+              to="/movies/my-collection"
+              className={({ isActive }) =>
+                isActive ? "text-primary font-semibold" : ""
+              }
+            >
+              My Collection
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/movies/add"
+              className={({ isActive }) =>
+                isActive ? "text-primary font-semibold" : ""
+              }
+            >
+              Add Movies
+            </NavLink>
+          </li>
+        </>
       )}
     </>
   );
@@ -100,6 +114,7 @@ const Navbar = () => {
           )}
         </ul>
 
+        {/* Mobile Hamburger */}
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -125,7 +140,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-3/12 p-4 bg-base-200 rounded-lg shadow absolute right-0 ">
+        <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-3/12 p-4 bg-base-200 rounded-lg shadow absolute right-0">
           {navLinks}
           {user ? (
             <>

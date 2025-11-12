@@ -10,6 +10,8 @@ import Login from "./Components/Login/Login.jsx";
 import Register from "./Components/Register/Register.jsx";
 import AllMovies from "./Components/AllMovies/AllMovies.jsx";
 import MoviesDetails from "./Components/MoviesDetails/MoviesDetails.jsx";
+import MyCollection from "./Components/MyCollection/MyCollection.jsx";
+import AddMovies from "./Components/AddMovies/AddMovies.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,10 +35,21 @@ const router = createBrowserRouter([
         element: <AllMovies />,
       },
       {
-        path:"/movies/:id",
-        element:<MoviesDetails/>,
-        loader:({params})=>fetch(`https://assignment-ten-server-wine.vercel.app/movies/${params.id}`)
-      }
+        path: "/movies/:id",
+        element: <MoviesDetails />,
+        loader: ({ params }) =>
+          fetch(
+            `https://assignment-ten-server-wine.vercel.app/movies/${params.id}`
+          ),
+      },
+      {
+        path: "/movies/my-collection",
+        element: <MyCollection />,
+      },
+      {
+        path: "/movies/add",
+        element: <AddMovies />,
+      },
     ],
   },
 ]);
