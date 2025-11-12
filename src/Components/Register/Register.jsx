@@ -4,7 +4,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
-  const { signIn } = useContext(AuthContext); 
+  const { signIn,googleLogin } = useContext(AuthContext); 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -45,6 +45,13 @@ const Register = () => {
   };
 
   const handleGoogleLogin = () => {
+    googleLogin()
+    .then(result=>{
+        console.log(result)
+    })
+    .catch(error=>{
+        console.log(error)
+    })
     toast("Google Registration coming soon!");
   };
 

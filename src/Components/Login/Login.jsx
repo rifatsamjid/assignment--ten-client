@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
-  const { logIn } = useContext(AuthContext);
+  const { logIn,googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -29,6 +29,13 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
+    googleLogin()
+    .then(result =>{
+        console.log(result)
+    })
+    .catch(error=>{
+        console.log(error)
+    })
     toast("Google Login coming soon!");
   };
   return (

@@ -1,32 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext } from './AuthContext';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../Firebase/Firebase.init';
+import React, { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../Firebase/Firebase.init";
 
 const AuthProvider = ({ children }) => {
+  const googleProvider = new GoogleAuthProvider();
 
-      const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-    // email singin
-    const signIn =(email,password)=>{
-        setUser(true)
-       return createUserWithEmailAndPassword(auth,email,password)
-    }
+  // email singin
+  const signIn = (email, password) => {
+    setUser(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-    // email login
-    const logIn=(email,password)=>{
-        setLoading(true)
-       return signInWithEmailAndPassword(auth,email,password)
-    }
+  // sign in with google
+  const googleLogin = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
 
-    // logOut
-    const logOut=()=>{
-        setLoading(true)
-        signOut(auth)
-    }
+  // email login
+  const logIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-    useEffect(() => {
+  // logOut
+  const logOut = () => {
+    setLoading(true);
+    signOut(auth);
+  };
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
@@ -37,15 +51,16 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-    const AuthInfo={
-        signIn,
-        logIn,
-        logOut,
-        user,
-        loading
-    }
+  const AuthInfo = {
+    signIn,
+    logIn,
+    logOut,
+    user,
+    loading,
+    googleLogin,
+  };
 
-    return <AuthContext value={AuthInfo}>{children}</AuthContext>
- };
+  return <AuthContext value={AuthInfo}>{children}</AuthContext>;
+};
 
 export default AuthProvider;
