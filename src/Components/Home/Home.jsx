@@ -2,6 +2,7 @@ import React from "react";
 import Hero from "./Hero";
 import TopRating from "./TopRating";
 import RecentlyAddedMovies from "../RecentlyAddedMovies/RecentlyAddedMovies";
+import About from "../About/About";
 
 const topRateMoviesPromise = fetch(
   "https://assignment-ten-server-wine.vercel.app/movies/top-rating-movies"
@@ -16,8 +17,10 @@ const Home = () => {
         className="mb-16"
         topRateMoviesPromise={topRateMoviesPromise}
       ></TopRating>
+
       <h1 className="font-bold text-2xl mb-10 mt-28">Recently Added</h1>
       <RecentlyAddedMovies></RecentlyAddedMovies>
+      <About></About>
     </div>
   );
 };
