@@ -4,7 +4,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
-  const { signIn,googleLogin } = useContext(AuthContext); 
+  const { signIn, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -15,7 +15,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  
   const validatePassword = (password) => {
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
@@ -23,6 +22,7 @@ const Register = () => {
     return hasUppercase && hasLowercase && isLongEnough;
   };
 
+  // handle email/password registration
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validatePassword(password)) {
@@ -34,7 +34,22 @@ const Register = () => {
 
     setLoading(true);
     try {
-      await signIn(email, password);
+      const userCredential = await signIn(email, password); 
+      const user = userCredential.user;
+
+      // save to database
+      const newUser = {
+        name: name || user.displayName || "No Name",
+        email: user.email,
+        image: photoURL || user.photoURL || "",
+      };
+
+      await fetch("https://assignment-ten-server-wine.vercel.app/users", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(newUser),
+      });
+
       toast.success("Registration Successful!");
       navigate(from, { replace: true });
     } catch (error) {
@@ -44,15 +59,30 @@ const Register = () => {
     }
   };
 
+  // handle Google registration
   const handleGoogleLogin = () => {
     googleLogin()
-    .then(result=>{
-        console.log(result)
-    })
-    .catch(error=>{
-        console.log(error)
-    })
-    toast("Google Registration coming soon!");
+      .then(async (result) => {
+        const user = result.user;
+        const newUser = {
+          name: user.displayName,
+          email: user.email,
+          image: user.photoURL,
+        };
+
+        await fetch("https://assignment-ten-server-wine.vercel.app/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newUser),
+        });
+
+        toast.success("Google Registration Successful!");
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Google Registration Failed");
+      });
   };
 
   return (
@@ -66,7 +96,6 @@ const Register = () => {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
             className="input input-bordered w-full"
           />
           <input
@@ -99,7 +128,6 @@ const Register = () => {
             {loading ? "Registering..." : "Register"}
           </button>
 
-          {/* Google Register Button with logo */}
           <button
             type="button"
             onClick={handleGoogleLogin}
