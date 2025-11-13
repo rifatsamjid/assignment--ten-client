@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthProvider from "./Context/AuthProvider";
 import { WatchListProvider } from "./Components/WatchList/WatchListContext.jsx";
 
-
 const Root = lazy(() => import("./Layout/Root.jsx"));
 const Home = lazy(() => import("./Components/Home/Home.jsx"));
 const Login = lazy(() => import("./Components/Login/Login.jsx"));
@@ -19,7 +18,7 @@ const MyCollection = lazy(() =>
 );
 const AddMovies = lazy(() => import("./Components/AddMovies/AddMovies.jsx"));
 const WatchList = lazy(() => import("./Components/WatchList/WatchList.jsx"));
-
+const NotFound = lazy(() => import("./Components/NotFound/NotFound.jsx"));
 
 const Loading = () => (
   <div className="flex justify-center items-center h-screen bg-base-200">
@@ -27,13 +26,11 @@ const Loading = () => (
   </div>
 );
 
-
 const withSuspense = (Component) => (
   <Suspense fallback={<Loading />}>
     <Component />
   </Suspense>
 );
-
 
 const router = createBrowserRouter([
   {
@@ -70,8 +67,8 @@ const router = createBrowserRouter([
       { path: "/movies/watch", element: withSuspense(WatchList) },
     ],
   },
+  { path: "*", element: withSuspense(NotFound) },
 ]);
-
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
