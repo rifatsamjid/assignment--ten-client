@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "./../../Context/AuthContext";
 
 const Navbar = () => {
+  const location = useLocation();
   const { user, logOut } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -28,9 +30,8 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/"
-          end
-          className={({ isActive }) =>
-            isActive ? "text-primary font-semibold" : ""
+          className={() =>
+            location.pathname === "/" ? "text-primary font-semibold" : ""
           }
         >
           Home
@@ -39,9 +40,8 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies"
-          end
-          className={({ isActive }) =>
-            isActive ? "text-primary font-semibold" : ""
+          className={() =>
+            location.pathname === "/movies" ? "text-primary font-semibold" : ""
           }
         >
           All Movies
@@ -50,9 +50,10 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies/watch"
-          end
-          className={({ isActive }) =>
-            isActive ? "text-primary font-semibold" : ""
+          className={() =>
+            location.pathname === "/movies/watch"
+              ? "text-primary font-semibold"
+              : ""
           }
         >
           Watch List
@@ -63,9 +64,10 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/movies/my-collection"
-              end
-              className={({ isActive }) =>
-                isActive ? "text-primary font-semibold" : ""
+              className={() =>
+                location.pathname === "/movies/my-collection"
+                  ? "text-primary font-semibold"
+                  : ""
               }
             >
               My Collection
@@ -74,9 +76,10 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/movies/add"
-              end
-              className={({ isActive }) =>
-                isActive ? "text-primary font-semibold" : ""
+              className={() =>
+                location.pathname === "/movies/add"
+                  ? "text-primary font-semibold"
+                  : ""
               }
             >
               Add Movies
