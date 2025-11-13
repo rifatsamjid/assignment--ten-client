@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, NavLink } from "react-router"; 
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "./../../Context/AuthContext";
 
 const Navbar = () => {
@@ -39,6 +39,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies"
+          end
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : ""
           }
@@ -49,6 +50,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies/watch"
+          end
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : ""
           }
@@ -61,6 +63,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/movies/my-collection"
+              end
               className={({ isActive }) =>
                 isActive ? "text-primary font-semibold" : ""
               }
@@ -71,6 +74,7 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/movies/add"
+              end
               className={({ isActive }) =>
                 isActive ? "text-primary font-semibold" : ""
               }
@@ -119,7 +123,6 @@ const Navbar = () => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      
                       <img
                         src={
                           user?.photoURL ||
@@ -128,7 +131,7 @@ const Navbar = () => {
                         alt={user?.displayName || "User"}
                         onError={(e) => {
                           e.target.src =
-                            "https://i.ibb.co.com/7z3K5X7/default-avatar.png"; 
+                            "https://i.ibb.co.com/7z3K5X7/default-avatar.png";
                         }}
                       />
                     </div>
