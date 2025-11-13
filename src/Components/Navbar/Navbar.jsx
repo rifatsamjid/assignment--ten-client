@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router"; // make sure it's react-router-dom
+import React, { useState, useContext, useEffect } from "react";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
@@ -10,6 +10,18 @@ const Navbar = () => {
     logOut()
       .then(() => console.log("User logged out"))
       .catch((err) => console.log(err));
+  };
+
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "night" : "light");
   };
 
   const navLinks = (
@@ -64,7 +76,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-base-100 shadow-md px-4 py-2">
+    <nav className="bg-base-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-md px-4 py-2 transition-colors duration-300">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold text-primary">
@@ -74,6 +86,15 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 items-center">
           {navLinks}
+          <li>
+            <input
+              onChange={(e) => handleTheme(e.target.checked)}
+              type="Checkbox"
+              defaultChecked={localStorage.getItem("theme")}
+              className="toggle"
+            />
+            {/* ✅ Dark/Light mode toggle */}
+          </li>
           {user ? (
             <>
               <li>
@@ -140,8 +161,16 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-3/12 p-4 bg-base-200 rounded-lg shadow absolute right-0">
+        <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-8/12 p-4 bg-base-200 dark:bg-gray-800 rounded-lg shadow absolute right-0 transition-all duration-300">
           {navLinks}
+          <li>
+            <input
+              onChange={(e) => handleTheme(e.target.checked)}
+              type="Checkbox"
+              defaultChecked={localStorage.getItem("theme")}
+              className="toggle"
+            />
+          </li>
           {user ? (
             <>
               <li>
