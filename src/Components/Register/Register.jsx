@@ -4,7 +4,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
-  const { signIn, googleLogin } = useContext(AuthContext);
+  const { createUser, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -34,7 +34,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const userCredential = await signIn(email, password); 
+      const userCredential = await createUser(email, password); 
       const user = userCredential.user;
 
       // save to database

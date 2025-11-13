@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink } from "react-router"; 
 import { AuthContext } from "./../../Context/AuthContext";
 
 const Navbar = () => {
@@ -15,8 +15,7 @@ const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
-    const html = document.querySelector("html");
-    html.setAttribute("data-theme", theme);
+    document.querySelector("html").setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
@@ -40,7 +39,6 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies"
-          end
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : ""
           }
@@ -51,7 +49,6 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/movies/watch"
-          end
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : ""
           }
@@ -97,17 +94,14 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 items-center">
           {navLinks}
-
           <li>
-            {/* Dark/Light mode toggle */}
             <input
               onChange={(e) => handleTheme(e.target.checked)}
-              type="Checkbox"
-              defaultChecked={localStorage.getItem("theme") === "night"}
+              type="checkbox"
+              defaultChecked={theme === "night"}
               className="toggle"
             />
           </li>
-
           {user ? (
             <>
               <li>
@@ -119,31 +113,38 @@ const Navbar = () => {
                 </button>
               </li>
               <li>
-                {/* Avatar with dropdown */}
                 <div className="dropdown dropdown-end">
                   <label
                     tabIndex={0}
                     className="btn btn-ghost btn-circle avatar"
                   >
-                    <div className="w-8 rounded-full">
+                    <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                      
                       <img
-                        src={user.photoURL || "/default-avatar.png"}
-                        alt="user"
+                        src={
+                          user?.photoURL ||
+                          "https://i.ibb.co.com/7z3K5X7/default-avatar.png"
+                        }
+                        alt={user?.displayName || "User"}
+                        onError={(e) => {
+                          e.target.src =
+                            "https://i.ibb.co.com/7z3K5X7/default-avatar.png"; 
+                        }}
                       />
                     </div>
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                    className="dropdown-content menu p-4 shadow bg-base-100 rounded-box w-60 z-50"
                   >
                     <li>
-                      <span className="font-semibold">
-                        {user.displayName || "No Name"}
+                      <span className="font-bold">
+                        {user?.displayName || "No Name"}
                       </span>
                     </li>
                     <li>
                       <span className="text-sm text-gray-500">
-                        {user.email}
+                        {user?.email}
                       </span>
                     </li>
                   </ul>
@@ -169,8 +170,8 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Mobile Hamburger */}
-        <div className="md:hidden flex items-center">
+        {/* Mobile Menu */}
+        <div className="md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="btn btn-ghost"
@@ -195,55 +196,57 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-8/12 p-4 bg-base-200 dark:bg-gray-800 rounded-lg shadow absolute right-0 transition-all duration-300">
+        <ul className="absolute right-4 mt-2 w-64 p-6 bg-base-200 dark:bg-gray-800 rounded-lg shadow-lg z-50 flex flex-col gap-4">
           {navLinks}
-
           <li>
             <input
               onChange={(e) => handleTheme(e.target.checked)}
-              type="Checkbox"
-              defaultChecked={localStorage.getItem("theme") === "night"}
+              type="checkbox"
               className="toggle"
+              defaultChecked={theme === "night"}
             />
           </li>
-
           {user ? (
             <>
               <li>
                 <button
                   onClick={handleLogout}
-                  className="btn btn-outline btn-primary btn-sm"
+                  className="btn btn-outline btn-primary btn-sm w-full"
                 >
                   Logout
                 </button>
               </li>
               <li className="flex justify-center">
-                {/* dropdown mobile */}
                 <div className="dropdown dropdown-end">
                   <label
                     tabIndex={0}
                     className="btn btn-ghost btn-circle avatar"
                   >
-                    <div className="w-10 rounded-full">
+                    <div className="w-12 rounded-full">
                       <img
-                        src={user.photoURL || "/default-avatar.png"}
-                        alt="user"
+                        src={
+                          user?.photoURL ||
+                          "https://i.ibb.co.com/7z3K5X7/default-avatar.png"
+                        }
+                        alt="User"
+                        onError={(e) =>
+                          (e.target.src =
+                            "https://i.ibb.co.com/7z3K5X7/default-avatar.png")
+                        }
                       />
                     </div>
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                    className="dropdown-content menu p-4 shadow bg-base-100 rounded-box w-60"
                   >
                     <li>
-                      <span className="font-semibold">
-                        {user.displayName || "No Name"}
+                      <span className="font-bold">
+                        {user?.displayName || "No Name"}
                       </span>
                     </li>
                     <li>
-                      <span className="text-sm text-gray-500">
-                        {user.email}
-                      </span>
+                      <span className="text-sm">{user?.email}</span>
                     </li>
                   </ul>
                 </div>
@@ -254,13 +257,13 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/login"
-                  className="btn btn-outline btn-primary btn-sm"
+                  className="btn btn-outline btn-primary btn-sm w-full"
                 >
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/register" className="btn btn-primary btn-sm">
+                <Link to="/register" className="btn btn-primary btn-sm w-full">
                   Register
                 </Link>
               </li>
