@@ -1,49 +1,85 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Root from "./Layout/Root.jsx";
-import Home from "./Components/Home/Home.jsx";
-import AuthProvider from "./Context/AuthProvider"; // তোমার আগের নাম
-import Login from "./Components/Login/Login.jsx";
-import Register from "./Components/Register/Register.jsx";
-import AllMovies from "./Components/AllMovies/AllMovies.jsx";
-import MoviesDetails from "./Components/MoviesDetails/MoviesDetails.jsx";
-import MyCollection from "./Components/MyCollection/MyCollection.jsx";
-import AddMovies from "./Components/AddMovies/AddMovies.jsx";
-// import WatchList from "./Components/WatchList/WatchList.jsx";
+import AuthProvider from "./Context/AuthProvider";
 import { WatchListProvider } from "./Components/WatchList/WatchListContext.jsx";
-import WatchList from "./Components/WatchList/WatchList.jsx";
+
+
+const Root = lazy(() => import("./Layout/Root.jsx"));
+const Home = lazy(() => import("./Components/Home/Home.jsx"));
+const Login = lazy(() => import("./Components/Login/Login.jsx"));
+const Register = lazy(() => import("./Components/Register/Register.jsx"));
+const AllMovies = lazy(() => import("./Components/AllMovies/AllMovies.jsx"));
+const MoviesDetails = lazy(() =>
+  import("./Components/MoviesDetails/MoviesDetails.jsx")
+);
+const MyCollection = lazy(() =>
+  import("./Components/MyCollection/MyCollection.jsx")
+);
+const AddMovies = lazy(() => import("./Components/AddMovies/AddMovies.jsx"));
+const WatchList = lazy(() => import("./Components/WatchList/WatchList.jsx"));
+
+
+const Loading = () => (
+  <div className="flex justify-center items-center h-screen bg-base-200">
+    <span className="loading loading-spinner text-primary w-16 h-16"></span>
+  </div>
+);
+
+
+const withSuspense = (Component) => (
+  <Suspense fallback={<Loading />}>
+    <Component />
+  </Suspense>
+);
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
     children: [
-      { index: true, element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/movies", element: <AllMovies /> },
+      { index: true, element: withSuspense(Home) },
+      { path: "/login", element: withSuspense(Login) },
+      { path: "/register", element: withSuspense(Register) },
+      {
+        path: "/movies",
+        element: withSuspense(AllMovies),
+        loader: () =>
+          fetch("https://assignment-ten-server-wine.vercel.app/movies"),
+      },
       {
         path: "/movies/:id",
-        element: <MoviesDetails />,
-        loader: ({ params }) =>
-          fetch(
+        element: withSuspense(MoviesDetails),
+        loader: async ({ params }) => {
+          const res = await fetch(
             `https://assignment-ten-server-wine.vercel.app/movies/${params.id}`
-          ),
+          );
+          if (!res.ok) throw new Error("Movie not found");
+          return res.json();
+        },
       },
-      { path: "/movies/my-collection", element: <MyCollection /> },
-      { path: "/movies/add", element: <AddMovies /> },
-      { path: "/movies/watch", element: <WatchList /> },
+      {
+        path: "/movies/my-collection",
+        element: withSuspense(MyCollection),
+        loader: () =>
+          fetch("https://assignment-ten-server-wine.vercel.app/movies"),
+      },
+      { path: "/movies/add", element: withSuspense(AddMovies) },
+      { path: "/movies/watch", element: withSuspense(WatchList) },
     ],
   },
 ]);
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <WatchListProvider>
-        <RouterProvider router={router} />
+        <Suspense fallback={<Loading />}>
+          <RouterProvider router={router} />
+        </Suspense>
       </WatchListProvider>
     </AuthProvider>
   </StrictMode>

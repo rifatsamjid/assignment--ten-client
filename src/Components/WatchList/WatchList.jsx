@@ -3,7 +3,7 @@ import { Trash2 } from "lucide-react";
 import { useWatchList } from "./WatchListContext"; 
 
 const WatchList = () => {
-  const { watchList, removeFromWatchList } = useWatchList(); // useContext না!
+  const { watchList, removeFromWatchList } = useWatchList(); 
 
   if (watchList.length === 0) {
     return (
