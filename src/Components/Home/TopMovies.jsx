@@ -3,10 +3,10 @@ import { Star } from "lucide-react";
 import { Link } from "react-router";
 
 const TopMovies = ({ top }) => {
-  const {_id, title, rating, releaseYear, posterUrl, genre } = top;
+  const { _id, title, rating, releaseYear, posterUrl, genre } = top;
 
   return (
-    <div className=" backdrop-blur-md bg-gray-300 rounded-xl p-8 shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+    <div className=" backdrop-blur-md bg-base-300 rounded-xl p-8 shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
       <img
         src={posterUrl}
         alt={title}
@@ -25,7 +25,12 @@ const TopMovies = ({ top }) => {
         <p className="text-sm ">{genre}</p>
         <p className="text-sm font-semibold mt-1">Release: {releaseYear}</p>
       </div>
-      <Link to={`/movies/${_id}`} className="btn w-full ">View Details</Link>
+      <Link
+        to={`/movies/${_id}`}
+        className="btn w-full text-white border-none bg-[linear-gradient(90deg,#632EE3,#9F62F2)]"
+      >
+        View Details
+      </Link>
     </div>
   );
 };

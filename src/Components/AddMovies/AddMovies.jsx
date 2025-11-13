@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const AddMovies = () => {
-  const { user } = useContext(AuthContext); 
+  const { user } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -47,134 +48,97 @@ const AddMovies = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Movie added:", data);
-        alert("Movie added successfully!");
-        e.target.reset();
-
-       
-        setFormData((prev) => ({
-          ...prev,
-          title: "",
-          genre: "",
-          releaseYear: "",
-          director: "",
-          cast: "",
-          rating: "",
-          duration: "",
-          plotSummary: "",
-          posterUrl: "",
-          language: "",
-          country: "",
-        }));
+        if (data.insertedId) {
+          toast.success(" Movie added successfully!");
+          e.target.reset();
+          setFormData((prev) => ({
+            ...prev,
+            title: "",
+            genre: "",
+            releaseYear: "",
+            director: "",
+            cast: "",
+            rating: "",
+            duration: "",
+            plotSummary: "",
+            posterUrl: "",
+            language: "",
+            country: "",
+          }));
+        } else {
+          toast.error(" Failed to add movie. Try again!");
+        }
       })
-      .catch((err) => console.error(err));
+      .catch(() => toast.error(" Something went wrong! Please try again."));
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 rounded-2xl shadow-lg mt-8">
-      <h2 className="text-2xl font-bold mb-4 text-center">Add a New Movie</h2>
+    <div className="flex justify-center items-center min-h-screen bg-base-200 p-4">
+      <Toaster position="top-center" reverseOrder={false} />
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        {/* all your existing inputs */}
-        <input
-          type="text"
-          name="title"
-          placeholder="Movie Title"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-          required
-        />
-        <input
-          type="text"
-          name="genre"
-          placeholder="Genre"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-          required
-        />
-        <input
-          type="number"
-          name="releaseYear"
-          placeholder="Release Year"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-          required
-        />
-        <input
-          type="text"
-          name="director"
-          placeholder="Director"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-          required
-        />
-        <input
-          type="text"
-          name="cast"
-          placeholder="Cast"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
-        <input
-          type="number"
-          name="rating"
-          placeholder="Rating (1-10)"
-          step="0.1"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
-        <input
-          type="number"
-          name="duration"
-          placeholder="Duration (min)"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
-        <textarea
-          name="plotSummary"
-          placeholder="Plot Summary"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
-        <input
-          type="text"
-          name="posterUrl"
-          placeholder="Poster URL"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
-        <input
-          type="text"
-          name="language"
-          placeholder="Language"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
-        <input
-          type="text"
-          name="country"
-          placeholder="Country"
-          onChange={handleChange}
-          className="w-full p-2 rounded border"
-        />
+      <div className="bg-base-100 shadow-2xl rounded-2xl w-full max-w-2xl p-6 sm:p-8 border border-gray-200">
+        <h2 className="text-3xl font-bold text-center mb-6 text-primary">
+          Add a New Movie
+        </h2>
 
-        
-        <input
-          type="email"
-          name="addedBy"
-          placeholder="Added By (Email)"
-          defaultValue={formData.addedBy}
-          className="w-full p-2 rounded border "
-          readOnly
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-500 w-full p-2 rounded hover:bg-blue-600"
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
-          Add Movie
-        </button>
-      </form>
+          {[
+            ["title", "Movie Title", "text"],
+            ["genre", "Genre", "text"],
+            ["releaseYear", "Release Year", "number"],
+            ["director", "Director", "text"],
+            ["cast", "Cast", "text"],
+            ["rating", "Rating (1-10)", "number"],
+            ["duration", "Duration (min)", "number"],
+            ["posterUrl", "Poster URL", "text"],
+            ["language", "Language", "text"],
+            ["country", "Country", "text"],
+          ].map(([name, placeholder, type]) => (
+            <input
+              key={name}
+              type={type}
+              name={name}
+              placeholder={placeholder}
+              value={formData[name]}
+              onChange={handleChange}
+              className={`w-full p-3  rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 outline-none ${
+                name === "posterUrl" || name === "cast" ? "sm:col-span-2" : ""
+              }`}
+              required={["title", "genre", "releaseYear", "director"].includes(
+                name
+              )}
+            />
+          ))}
+
+          <textarea
+            name="plotSummary"
+            placeholder="Plot Summary"
+            value={formData.plotSummary}
+            onChange={handleChange}
+            rows="3"
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 outline-none sm:col-span-2"
+          />
+
+          <input
+            type="email"
+            name="addedBy"
+            placeholder="Added By (Email)"
+            value={formData.addedBy || user?.email}
+            readOnly
+            className="w-full p-3 rounded-lg border border-gray-200 sm:col-span-2"
+          />
+
+          <button
+            type="submit"
+            className="sm:col-span-2 py-3 mt-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold hover:opacity-90 transition-all"
+          >
+            Add Movie
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -18,9 +18,11 @@ const AuthProvider = ({ children }) => {
 
   // email singin
   const signIn = (email, password) => {
-    setUser(true);
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
+
+  
 
   // sign in with google
   const googleLogin = () => {
@@ -37,7 +39,7 @@ const AuthProvider = ({ children }) => {
   // logOut
   const logOut = () => {
     setLoading(true);
-    signOut(auth);
+    return signOut(auth);
   };
 
   useEffect(() => {

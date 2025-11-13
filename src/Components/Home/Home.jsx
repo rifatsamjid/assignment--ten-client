@@ -9,7 +9,7 @@ const topRateMoviesPromise = fetch(
 
 const Home = () => {
   return (
-    <div>
+    <div className="max-w-[1400px] m-auto text-center">
       <Hero></Hero>
       <h1 className="font-bold text-2xl mb-10 mt-28">Top Rated Movies</h1>
       <TopRating

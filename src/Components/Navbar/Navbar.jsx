@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "./../../Context/AuthContext";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -48,6 +48,17 @@ const Navbar = () => {
           All Movies
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/movies/watch"
+          end
+          className={({ isActive }) =>
+            isActive ? "text-primary font-semibold" : ""
+          }
+        >
+          Watch List
+        </NavLink>
+      </li>
       {user && (
         <>
           <li>
@@ -86,15 +97,17 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 items-center">
           {navLinks}
+
           <li>
+            {/* Dark/Light mode toggle */}
             <input
               onChange={(e) => handleTheme(e.target.checked)}
               type="Checkbox"
-              defaultChecked={localStorage.getItem("theme")}
+              defaultChecked={localStorage.getItem("theme") === "night"}
               className="toggle"
             />
-            {/* ✅ Dark/Light mode toggle */}
           </li>
+
           {user ? (
             <>
               <li>
@@ -106,13 +119,34 @@ const Navbar = () => {
                 </button>
               </li>
               <li>
-                <div className="avatar online">
-                  <div className="w-8 rounded-full">
-                    <img
-                      src={user.photoURL || "/default-avatar.png"}
-                      alt="user"
-                    />
-                  </div>
+                {/* Avatar with dropdown */}
+                <div className="dropdown dropdown-end">
+                  <label
+                    tabIndex={0}
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-8 rounded-full">
+                      <img
+                        src={user.photoURL || "/default-avatar.png"}
+                        alt="user"
+                      />
+                    </div>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li>
+                      <span className="font-semibold">
+                        {user.displayName || "No Name"}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="text-sm text-gray-500">
+                        {user.email}
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </li>
             </>
@@ -163,14 +197,16 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <ul className="flex z-10 flex-col md:hidden items-center gap-3 mt-2 w-8/12 p-4 bg-base-200 dark:bg-gray-800 rounded-lg shadow absolute right-0 transition-all duration-300">
           {navLinks}
+
           <li>
             <input
               onChange={(e) => handleTheme(e.target.checked)}
               type="Checkbox"
-              defaultChecked={localStorage.getItem("theme")}
+              defaultChecked={localStorage.getItem("theme") === "night"}
               className="toggle"
             />
           </li>
+
           {user ? (
             <>
               <li>
@@ -182,13 +218,34 @@ const Navbar = () => {
                 </button>
               </li>
               <li className="flex justify-center">
-                <div className="avatar online">
-                  <div className="w-10 rounded-full">
-                    <img
-                      src={user.photoURL || "/default-avatar.png"}
-                      alt="user"
-                    />
-                  </div>
+                {/* dropdown mobile */}
+                <div className="dropdown dropdown-end">
+                  <label
+                    tabIndex={0}
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img
+                        src={user.photoURL || "/default-avatar.png"}
+                        alt="user"
+                      />
+                    </div>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li>
+                      <span className="font-semibold">
+                        {user.displayName || "No Name"}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="text-sm text-gray-500">
+                        {user.email}
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </li>
             </>
