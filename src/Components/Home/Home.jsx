@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import TopRating from "./TopRating";
 import RecentlyAddedMovies from "../RecentlyAddedMovies/RecentlyAddedMovies";
 import About from "../About/About";
+import GenreSection from "../GenreSection/GenreSection";
 
 const topRateMoviesPromise = fetch(
   "https://assignment-ten-server-wine.vercel.app/movies/top-rating-movies"
@@ -21,6 +22,7 @@ const Home = () => {
       <h1 className="font-bold text-2xl mb-10 mt-28">Recently Added</h1>
       <RecentlyAddedMovies></RecentlyAddedMovies>
       <About></About>
+      <GenreSection></GenreSection>
     </div>
   );
 };
