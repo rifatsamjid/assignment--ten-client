@@ -4,7 +4,7 @@ import RecentMoviesCard from './RecentMoviesCard';
 const AddedMovies = ({recentAddedMoviesPromise}) => {
     
             const recentlyAdded = use(recentAddedMoviesPromise)
-        console.log(recentlyAdded)
+        // console.log(recentlyAdded)
 
     return (
         <div>

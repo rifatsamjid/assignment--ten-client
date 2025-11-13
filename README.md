@@ -1,16 +1,46 @@
-# React + Vite
+# MovieMaster Pro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** [https://assignment-ten-76e7a.web.app/](https://assignment-ten-76e7a.web.app/)
 
-Currently, two official plugins are available:
+MovieMaster Pro is a comprehensive movie management system where users can browse, manage, and organize their favorite movies. It features advanced filtering, personalized collections, and a sleek, responsive design for all devices.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Browse Movies:** Explore all movies with detailed information including title, genre, rating, release year, cast, and plot summary.
+- **User Collections:** Logged-in users can add movies to their personal collection and manage them with edit/delete functionality.
+- **Top Rated & Recently Added:** Quickly find top-rated movies and the latest additions in the system.
+- **Advanced Filtering:** Filter movies by multiple genres or rating ranges for easy discovery.
+- **Watchlist & Favorites:** Add movies to your watchlist and access them on a dedicated page.
+- **Responsive Design:** Works seamlessly on desktop, tablet, and mobile devices with an intuitive layout.
+- **Authentication:** Secure login and registration using email/password or Google login, with protected routes for private content.
+- **Loading & Toast Notifications:** Smooth loading states and informative toast messages for CRUD operations.
+- **Theme Toggle:** Switch between light and dark modes to enhance the user experience.
+- **Animations & Visuals:** Eye-catching animations using Framer Motion and AOS for a dynamic interface.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Pages & Routes
+
+| Route                  | Description                                   | Protected |
+|------------------------|-----------------------------------------------|-----------|
+| `/`                    | Home page with hero, top-rated, stats       | No        |
+| `/movies`              | All movies listing with filters              | No        |
+| `/movies/add`          | Add a new movie                              | Yes       |
+| `/movies/my-collection`| User’s personal movie collection             | Yes       |
+| `/movies/update/:id`   | Update movie (owner only)                    | Yes       |
+| `/movies/:id`          | Movie details page                           | No        |
+
+---
+
+## Tech Stack
+
+- **Frontend:** React, TailwindCSS, Framer Motion, AOS, React Router, React Hot Toast
+- **Backend/Hosting:** Firebase (Authentication & Firestore Database)
+- **Other Libraries:** React Icons, Lucide React, React Three Fiber, react-tsparticles, Animate.css
+- **Deployment:** Hosted on Firebase Hosting
+
+---
+
+
