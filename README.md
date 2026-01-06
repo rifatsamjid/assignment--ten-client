@@ -87,15 +87,15 @@ Follow these steps to set up and run **MovieMaster Pro** locally on your machine
 ### Install dependencies
 
 npm install
-or
+# or
 yarn install
-or
+# or
 pnpm install
 
 ### Run the development server
 
 npm run dev
-or
+# or
 yarn dev
-or
+# or
 pnpm dev
