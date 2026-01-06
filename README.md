@@ -62,6 +62,7 @@ MovieMaster Pro is a comprehensive movie management system where users can brows
   "tailwindcss": "^4.1.17",
   "three": "^0.181.1"
 }
+```
 ---
 
 ## Installation
