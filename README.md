@@ -24,14 +24,14 @@ MovieMaster Pro is a comprehensive movie management system where users can brows
 
 ## Pages & Routes
 
-| Route                  | Description                                   | Protected |
-|------------------------|-----------------------------------------------|-----------|
-| `/`                    | Home page with hero, top-rated, stats        | No        |
-| `/movies`              | All movies listing with filters              | No        |
-| `/movies/add`          | Add a new movie                              | Yes       |
-| `/movies/my-collection`| User’s personal movie collection             | Yes       |
-| `/movies/update/:id`   | Update movie (owner only)                    | Yes       |
-| `/movies/:id`          | Movie details page                           | No        |
+| Route                   | Description                           | Protected |
+| ----------------------- | ------------------------------------- | --------- |
+| `/`                     | Home page with hero, top-rated, stats | No        |
+| `/movies`               | All movies listing with filters       | No        |
+| `/movies/add`           | Add a new movie                       | Yes       |
+| `/movies/my-collection` | User’s personal movie collection      | Yes       |
+| `/movies/update/:id`    | Update movie (owner only)             | Yes       |
+| `/movies/:id`           | Movie details page                    | No        |
 
 ---
 
@@ -63,6 +63,7 @@ MovieMaster Pro is a comprehensive movie management system where users can brows
   "three": "^0.181.1"
 }
 ```
+
 ---
 
 ## Installation
@@ -70,6 +71,7 @@ MovieMaster Pro is a comprehensive movie management system where users can brows
 Follow these steps to set up and run **MovieMaster Pro** locally on your machine.
 
 ### Prerequisites
+
 - Node.js (v18 or higher recommended)
 - npm or yarn or pnpm
 - Git
@@ -80,19 +82,20 @@ Follow these steps to set up and run **MovieMaster Pro** locally on your machine
    ```bash
    git clone https://github.com/rifatsamjid/assignment--ten-client.git
    cd assignment--ten-client
+   ```
 
 ### Install dependencies
 
-   npm install
-# or
+npm install
+or
 yarn install
-# or
+or
 pnpm install
 
 ### Run the development server
 
 npm run dev
-# or
+or
 yarn dev
-# or
+or
 pnpm dev
