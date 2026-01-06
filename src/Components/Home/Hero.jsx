@@ -49,38 +49,66 @@ const HeroInfinite = () => {
       setCurrentIndex((prevIndex) =>
         prevIndex === recentMovies.length - 1 ? 0 : prevIndex + 1
       );
-    }, 4000);
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, []);
 
-  const currentMovie = recentMovies[currentIndex];
-
   return (
-    <div className="relative -z-10 w-full flex justify-center items-center py-20 px-4">
-      <AnimatePresence>
+    <div className="relative -z-10 w-full flex justify-center items-center py-20 px-4 overflow-hidden">
+      <AnimatePresence mode="wait">
         <motion.div
-          key={currentMovie.title}
-          initial={{ opacity: 0, x: 50 }}
+          key={currentIndex}
+          initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 1 }}
-          className="flex flex-col md:flex-row items-center max-w-[1300px] w-full bg-base-300 rounded-xl p-6 shadow-lg"
+          exit={{ opacity: 0, x: -100 }}
+          transition={{
+            opacity: { duration: 0.8 },
+            x: {
+              duration: 1.2,
+              ease: [0.22, 1, 0.36, 1],
+            },
+          }}
+          className="flex flex-col md:flex-row items-center max-w-[1300px] w-full bg-base-300 rounded-xl p-6 shadow-2xl"
         >
-          {/* Poster Left */}
-          <img
-            src={currentMovie.image}
-            alt={currentMovie.title}
-            className="w-72  object-cover rounded-lg mb-4 md:mb-0 md:mr-6 shadow-lg"
+          
+          <motion.img
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+            src={recentMovies[currentIndex].image}
+            alt={recentMovies[currentIndex].title}
+            className="w-72 object-cover rounded-lg mb-4 md:mb-0 md:mr-8 shadow-2xl"
           />
 
-          {/* Text Right */}
-          <div className="flex flex-col justify-center text-center md:text-left md:w-1/2">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2">
-              {currentMovie.title}
-            </h2>
-            <p className="text-gray-400 mb-4">{currentMovie.year}</p>
-            <p className="text-lg md:text-base">{currentMovie.description}</p>
+          {/* Text content with staggered animation */}
+          <div className="flex flex-col justify-center text-center md:text-left md:w-1/2 space-y-4">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.9, ease: "easeOut" }}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold"
+            >
+              {recentMovies[currentIndex].title}
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+              className="text-gray-400 text-xl"
+            >
+              {recentMovies[currentIndex].year}
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.8 }}
+              className="text-lg leading-relaxed"
+            >
+              {recentMovies[currentIndex].description}
+            </motion.p>
           </div>
         </motion.div>
       </AnimatePresence>
